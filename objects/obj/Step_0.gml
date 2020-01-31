@@ -1,21 +1,29 @@
 /// @description Insert description here
 
 var left = keyboard_check_pressed(vk_left);
-var right = keyboard_checked_pressed(vk_right);
-frames ++;
-if (frames >= delay){
-frames = 0;
-y += sprite_height;
-
+var right = keyboard_check_pressed(vk_right);
+if !settled
+{
+	frames ++;
+	if frames >= delay
+	{
+		frames = 0;
+		if !place_meeting(x,y+sprite_height,obj) && !place_meeting(x,y+sprite_height,bottom) 
+			y += sprite_height;
+		else 
+		{
+			settled = true;
+			control = false;
+			puzzle_controller.focus = noone;
+		}
+	}
 }
-
-if (control = true){
-	if left = true{
-		x+= sprite_width;
+if control = true && !settled
+{
+	if left || right
+	{
+		var dir = right - left;
+		if !place_meeting(x+sprite_height*dir,y,obj) && !place_meeting(x+sprite_height*dir,y,bottom) 
+			x+= sprite_width*dir;
 	}
-	
-	if right = true{
-		y+= sprite_width;
-	}
-	
 }
